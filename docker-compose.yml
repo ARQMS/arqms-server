@@ -4,6 +4,7 @@ services:
     image: hivemq/hivemq-ce
     ports:
       - "8883:8883"
+      - "8000:8000"
     volumes:
       - ./hivemq/conf:/opt/hivemq-ce-2021.3/conf
       - ./hivemq/log:/opt/hivemq-ce-2021.3/log
