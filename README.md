@@ -3,9 +3,62 @@ The following illustration shows an overview about ARQMS and all parts
 ![Overview](docs/server_overview.png "Server Overview")
 
 # First Step
-Ensure docker and docker compose is installed on your developing machine.
+Ensure docker and docker compose is installed on your developing machine. 
+Before you start the docker containers, a `.env` file must be created on the repository root directory. Ensure you use a secury master key (>128bit)
+```ini
+INITDB_ROOT_USERNAME=root
+INITDB_ROOT_PASSWORD=root
+DATABASE_URI=mongodb://root:root@storage:27017/dev
+APP_ID=arqms
+MASTER_KEY=masterKey
+SERVER_URI=http://localhost:1337/parse
+APP_URI=http://localhost:49430/
+SMTP_PORT=587
+SMTP_HOST=
+SMTP_EMAIL=
+SMTP_PWD=
 ```
-repo> docker compose -p "ARQMS" up -d
+
+When you start parse_dashboard service for development purpose, ensure `parse_dashboard/config.json` exists and is configured
+according to the `.env` file!
+```json
+{
+ "apps": [
+   {
+     "serverURL": "http://localhost:1337/parse",
+     "appId": "arqms",
+     "masterKey": "masterKey",
+     "appName": "ARQMS - Local"
+   }
+ ]
+}
+```
+
+According to your needs, either first of second command shall be run on your docker engine machine.
+```
+for production>  docker compose -f docker-compose.yml -p "ARQMS" up up
+
+        - or -
+
+for development> docker compose -f docker-compose.yml -f docker-compose.dev.yml -p "ARQMS" up --build
+```
+
+> **Note:** The following step is only required for the very first time when containers are created.
+> Open any mongodb client configuration tool and connect with the INITDB_ROOT_USERNAME to create a new user according to the `.env` file `DATABASE_URI`. In this example we use the already existing "root:root" 
+> user and grant them dbOwner permissions to `dev` collection. So all the application data is stored to `dev` collection.
+
+
+```
+use dev
+db.createUser(
+    {
+        user: "root",
+        pwd: "root",
+        roles: [
+            { role: "dbOwner", db: "dev" }
+        ]
+    }
+)
 ```
 
 # Installation

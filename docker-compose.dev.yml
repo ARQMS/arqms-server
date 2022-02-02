@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:  
+  parse-dashboard:
+    image: parseplatform/parse-dashboard
+    container_name: parse-dashboard
+    hostname: parse-dashboard
+    command: --dev
+    links:
+      - parse-server
+    depends_on:
+      - parse-server
+    ports:
+      - 4040:4040
+    volumes:
+      - ./parse_dashboard/config.json:/src/Parse-Dashboard/parse-dashboard-config.json
+     

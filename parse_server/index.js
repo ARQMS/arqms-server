@@ -1,0 +1,49 @@
+// Example express application adding the parse-server module to expose Parse
+// compatible API routes.
+
+const express = require('express');
+const ParseServer = require('parse-server').ParseServer;
+const path = require('path');
+const args = process.argv || [];
+const test = args.some(arg => arg.includes('jasmine'));
+
+const config = {
+  // Configure Parse Core configuration
+  // https://parseplatform.org/parse-server/api/master/ParseServerOptions.html
+  appId: process.env.PARSE_APP_ID || 'arqms',
+  appName: 'Air Room Management Server',
+  publicServerURL: process.env.PARSE_SERVER_URI || 'http://localhost:1337/parse',
+  masterKey: process.env.PARSE_MASTER_KEY || 'masterKey',
+  serverURL: process.env.PARSE_SERVER_URI || 'http://localhost:1337/parse',
+    
+  // Setup mongodb databse
+  databaseURI:  process.env.PARSE_DATABSE_URI || 'mongodb://root:root@localhost:27017/dev',
+  
+  // Cloud Webhooks
+  cloud: __dirname + '/cloud/main.js', 
+
+  // Flutter Web Bug
+  // https://github.com/parse-community/Parse-SDK-Flutter/issues/500
+  allowHeaders: ['X-Parse-Installation-Id'],
+};
+
+const app = express();
+
+// Serve the Parse API on the /parse URL prefix
+if (!test) {
+  const api = new ParseServer(config);
+  app.use('/parse', api);
+}
+
+const port = 1337;
+if (!test) {
+  const httpServer = require('http').createServer(app);
+  httpServer.listen(port, function () {
+    console.log('parse-server running on port ' + port + '.');
+  });
+}
+
+module.exports = {
+  app,
+  config,
+};

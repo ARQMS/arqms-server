@@ -1,0 +1,19 @@
+{
+  "name": "parse_server",
+  "version": "1.0.0",
+  "description": "The Parse Server",
+  "author": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "debug": "nodemon -L --inspect=0.0.0.0:9229 index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "parse": "^3.4.1",
+    "parse-server": "^4.10.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

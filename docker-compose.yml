@@ -3,25 +3,56 @@ services:
   mqtt:
     image: hivemq/hivemq-ce
     ports:
-      - "8883:8883"
-      - "8000:8000"
+      - 8883:8883
+      - 8000:8000
     volumes:
       - ./hivemq/conf:/opt/hivemq-ce-2021.3/conf
       - ./hivemq/log:/opt/hivemq-ce-2021.3/log
       - ./hivemq/data:/opt/hivemq-ce-2021.3/data
-    
-  # api:
-  #   build:
-  #     context: .
-  #     dockerfile: docker-api
-  #     
-  #   ports:
-  #     - "443:443"
-  #     - "80:443"
-  #           
-  #   depends_on:
-  #     - mqtt
-  #     - db
+    links:
+      - parse-server
+    depends_on:
+      - parse-server
       
-  # db:
+  storage:
+    image: mongo
+    volumes:
+      - db_data:/data/db
+      - db_config:/data/configdb
+    container_name: storage
+    hostname: storage
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${INITDB_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${INITDB_ROOT_PASSWORD}"
   
+  parse-server:
+    build: ./parse_server/.
+    command: npm run debug
+    environment:
+        PARSE_DATABSE_URI: "${DATABASE_URI}"
+        PARSE_APP_ID: "${APP_ID}"
+        PARSE_MASTER_KEY: "${MASTER_KEY}"
+        PARSE_SERVER_URI: "${SERVER_URI}"
+        PARSE_APP_URI: "${APP_URI}"
+        PARSE_SMTP_PORT: "${SMTP_PORT}"
+        PARSE_SMTP_HOST: "${SMTP_HOST}"
+        PARSE_SMTP_EMAIL: "${SMTP_EMAIL}"
+        PARSE_SMTP_PWD: "${SMTP_PWD}"
+    container_name: parse-server
+    hostname: parse-server
+    ports:
+      - 1337:1337
+    links:
+      - storage
+    depends_on:
+      - storage
+    volumes:
+      - ./parse_server:/usr/src/app
+      - nodemodules:/usr/src/app/node_modules
+     
+volumes:
+  db_data:
+  db_config:
+  nodemodules:
