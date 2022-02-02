@@ -1,0 +1,10 @@
+{
+ "apps": [
+   {
+     "serverURL": "http://localhost:1337/parse",
+     "appId": "arqms",
+     "masterKey": "masterKey",
+     "appName": "ARQMS - Local"
+   }
+ ]
+}

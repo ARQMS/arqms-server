@@ -43,11 +43,8 @@ for production>  docker compose -f docker-compose.yml -p "ARQMS" up up
 for development> docker compose -f docker-compose.yml -f docker-compose.dev.yml -p "ARQMS" up --build
 ```
 
-> **Note:** The following step is only required for the very first time when containers are created.
-> Open any mongodb client configuration tool and connect with the INITDB_ROOT_USERNAME to create a new user according to the `.env` file `DATABASE_URI`. In this example we use the already existing "root:root" 
-> user and grant them dbOwner permissions to `dev` collection. So all the application data is stored to `dev` collection.
-
-
+**Note:** The following step is only required for the very first time when containers are created.
+Open any mongo cli and connect with the `db.auth("root", passwordPrompt())` (use the INITDB_ROOT_USERNAME). Then run the following command to create a new user according to the `.env` file `DATABASE_URI`. Restart the parse_server container.
 ```
 use dev
 db.createUser(
@@ -60,6 +57,8 @@ db.createUser(
     }
 )
 ```
+
+
 
 # Installation
 The following steps are only required for productive system. See [First Step](#first-step) otherwise
