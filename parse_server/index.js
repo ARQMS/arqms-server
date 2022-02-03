@@ -15,7 +15,9 @@ const config = {
   publicServerURL: process.env.PARSE_SERVER_URI || 'http://localhost:1337/parse',
   masterKey: process.env.PARSE_MASTER_KEY || 'masterKey',
   serverURL: process.env.PARSE_SERVER_URI || 'http://localhost:1337/parse',
-    
+  allowClientClassCreation: false,
+  startLiveQueryServer: true,
+  
   // Setup mongodb databse
   databaseURI:  process.env.PARSE_DATABSE_URI || 'mongodb://root:root@localhost:27017/dev',
   
@@ -25,6 +27,12 @@ const config = {
   // Flutter Web Bug
   // https://github.com/parse-community/Parse-SDK-Flutter/issues/500
   allowHeaders: ['X-Parse-Installation-Id'],
+  
+  // Live Query
+  // https://docs.parseplatform.org/parse-server/guide/#live-queries
+  liveQuery: {
+      classNames: ["Room"]
+  }
 };
 
 const app = express();
@@ -41,6 +49,7 @@ if (!test) {
   httpServer.listen(port, function () {
     console.log('parse-server running on port ' + port + '.');
   });
+  var parseLiveQueryServer = ParseServer.createLiveQueryServer(httpServer);
 }
 
 module.exports = {
