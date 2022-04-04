@@ -4,10 +4,10 @@
 
 
 # Installation
-1) Install Raspberry PI OS **Lite** (32bit)(https://www.youtube.com/watch?v=1s4sBoDej4g)
+1) Install Raspberry PI OS **Lite** (64bit)(https://www.youtube.com/watch?v=1s4sBoDej4g)
 2) Install Git ```sudo apt install git```
 3) Install curl ```sudo apt install curl```
-4) Install Docker ```curl -fsSL https://get.docker.com -o get-docker.sh| sudo sh get-docker.sh```
+4) Install Docker ```curl -fsSL https://get.docker.com -o get-docker.sh | sudo sh get-docker.sh```
 5) Add current user to docker group ```sudo usermod -aG docker $USER``` and reboot system!
 6) Let docker start at boot ```sudo systemctl enable --now docker```
 7) Install docker compose ```sudo curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-armv7" -o /usr/bin/docker-compose
