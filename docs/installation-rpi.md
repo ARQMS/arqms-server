@@ -15,10 +15,9 @@ sudo chmod +x /usr/bin/docker-compose``` **For 64-bit use docker-compose-linux-a
 
 ## Portainer.Io
 Portainer io is a web application to administrate docker containers. To install portainer CE follow the stepos https://docs.portainer.io/v/ce-2.11/start/install/server/docker/linux
-1) ```docker volume create portainer_data```
+1) login on RPI with SSH and execute ```docker volume create portainer_data```
 2) ```docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:2.11.0```
 3) Navigate to your web explorer and navigate to https://<rpi-IP>:9443
 
-## HiveMQ
-1) run ```docker compose -p "Humi" up -d```
-2) generate a certificate https://www.hivemq.com/blog/end-to-end-encryption-in-the-cloud/
+##  MQTT
+TBD

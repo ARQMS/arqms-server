@@ -36,7 +36,7 @@ according to the `.env` file!
 
 According to your needs, either first of second command shall be run on your docker engine machine.
 ```
-for production>  docker compose -f docker-compose.yml -p "arqms" up up
+for production>  docker compose -f docker-compose.yml -p "arqms" up
 
         - or -
 

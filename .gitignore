@@ -1,6 +1,6 @@
 # Docker
-hivemq/data
-hivemq/log
+mosquitto/data
+mosquitto/log
 
 # user specific
 .env
