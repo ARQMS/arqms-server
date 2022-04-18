@@ -44,7 +44,7 @@ for development> docker compose -f docker-compose.yml -f docker-compose.dev.yml 
 ```
 
 **Note:** The following step is only required for the very first time when containers are created.
-Open any mongo cli and connect with the `db.auth("root", passwordPrompt())` (use the INITDB_ROOT_USERNAME). Then run the following command to create a new user according to the `.env` file `DATABASE_URI`. Restart the parse_server container.
+Open any mongo cli and connect with the `use admin` and `db.auth("root", passwordPrompt())` (use the INITDB_ROOT_USERNAME). Then run the following command to create a new user according to the `.env` file `DATABASE_URI`. Restart the parse_server container.
 ```
 use dev
 db.createUser(
