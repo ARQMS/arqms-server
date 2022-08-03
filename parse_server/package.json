@@ -11,9 +11,9 @@
   "dependencies": {
     "express": "4.17.2",
     "parse": "3.4.1",
-    "parse-server": "4.10.4"
+    "parse-server": "^4.10.13"
   },
   "devDependencies": {
-    "nodemon": "2.0.15"
+    "nodemon": "^2.0.19"
   }
 }
