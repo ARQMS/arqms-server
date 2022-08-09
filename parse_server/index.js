@@ -15,7 +15,7 @@ const config = {
   publicServerURL: process.env.PARSE_SERVER_URI || 'http://localhost:1337/parse',
   masterKey: process.env.PARSE_MASTER_KEY || 'masterKey',
   serverURL: process.env.PARSE_SERVER_URI || 'http://localhost:1337/parse',
-  allowClientClassCreation: false,
+  allowClientClassCreation: true,
   startLiveQueryServer: true,
   
   // Setup mongodb databse

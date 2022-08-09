@@ -36,11 +36,11 @@ according to the `.env` file!
 
 According to your needs, either first of second command shall be run on your docker engine machine.
 ```
-for production>  docker compose -f docker-compose.yml -p "ARQMS" up up
+for production>  docker compose -f docker-compose.yml -p "arqms" up up
 
         - or -
 
-for development> docker compose -f docker-compose.yml -f docker-compose.dev.yml -p "ARQMS" up --build
+for development> docker compose -f docker-compose.yml -f docker-compose.dev.yml -p "arqms" up --build
 ```
 
 **Note:** The following step is only required for the very first time when containers are created.
