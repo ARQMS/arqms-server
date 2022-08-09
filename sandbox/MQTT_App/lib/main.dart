@@ -1,36 +1,24 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:mqtt5_client/mqtt5_browser_client.dart';
 import 'package:mqtt5_client/mqtt5_client.dart';
 
-final client = MqttBrowserClient('ws://127.0.0.1/mqtt', 'Flutter');
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  client.port = 8000;
+  final client = MqttBrowserClient('ws://localhost', 'Flutter');
+  client.port = 9001;
 
-  await initMQTT5(client);
-
-
-  runApp(const MyApp());
-}
-
-Future initMQTT5(MqttBrowserClient client) async {
   await client.connect();
-
-  if (client.connectionStatus!.state != MqttConnectionState.connected) {
-    client.disconnect();
-    exit(-1);
-  }
 
   client.subscribe("test/topic", MqttQos.atMostOnce);
   client.updates.listen((event) {
     final message = event[0].payload as MqttPublishMessage;
-    final payload = MqttUtilities.bytesToStringAsString(message.payload.message!);
+    final payload =
+        MqttUtilities.bytesToStringAsString(message.payload.message!);
     print(payload);
   });
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -91,7 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final builder = MqttPayloadBuilder();
     builder.addString(_counter.toString());
-    client.publishMessage("test/topic", MqttQos.atLeastOnce, builder.payload!);
   }
 
   @override

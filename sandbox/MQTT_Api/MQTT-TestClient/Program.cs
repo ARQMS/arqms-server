@@ -26,8 +26,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using MQTTnet;
 using MQTTnet.Client;
-using MQTTnet.Client.Options;
-using MQTTnet.Formatter;
 
 namespace MQTT_TestClient {
     class Program {
@@ -36,22 +34,23 @@ namespace MQTT_TestClient {
 
             var factory = new MqttFactory();
 
+            var client = factory.CreateMqttClient();
+
             var optionsBuilder = new MqttClientOptionsBuilder()
-                                 .WithClientId("Test1" + DateTime.UtcNow)
-                                 .WithProtocolVersion(MqttProtocolVersion.V500)
-                                 .WithTcpServer("127.0.0.1", 8883)
+                                 .WithClientId(Guid.NewGuid().ToString())
+                                 .WithTcpServer("localhost", 1883)
+                                 .WithCleanSession()
                                  .Build();
 
-            var client = factory.CreateMqttClient();
-            client.UseConnectedHandler(async e => {
-                await client.SubscribeAsync(factory.CreateSubscribeOptionsBuilder()
-                                                   .WithTopicFilter("test/topic")
-                                                   .Build());
-            });
-
             await client.ConnectAsync(optionsBuilder, CancellationToken.None);
+            await client.SubscribeAsync(factory.CreateSubscribeOptionsBuilder()
+                                               .WithTopicFilter("test/topic")
+                                               .Build());
 
-            client.UseApplicationMessageReceivedHandler(h => Console.WriteLine("received: " + Encoding.UTF8.GetString(h.ApplicationMessage.Payload)));
+            client.ApplicationMessageReceivedAsync += async h => {
+                Console.WriteLine("received: " + Encoding.UTF8.GetString(h.ApplicationMessage.Payload));
+                await Task.CompletedTask;
+            };
 
             string text = Console.ReadLine();
             while (!string.Equals(text, "exit")) {
