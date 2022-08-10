@@ -1,21 +1,21 @@
 version: "3.9"
 services:
   mqtt:
-    image: hivemq/hivemq-ce
+    image: eclipse-mosquitto:2.0.14
     ports:
-      - 8883:8883
-      - 8000:8000
+      - 1883:1883
+      - 9001:9001
     volumes:
-      - ./hivemq/conf:/opt/hivemq-ce-2021.3/conf
-      - ./hivemq/log:/opt/hivemq-ce-2021.3/log
-      - ./hivemq/data:/opt/hivemq-ce-2021.3/data
+      - ./mosquitto/conf:/mosquitto/config
+      - ./mosquitto/log:/mosquitto/log
+      - ./mosquitto/data:/mosquitto/data
     links:
       - parse-server
     depends_on:
       - parse-server
       
   storage:
-    image: mongo
+    image: mongo:4.4.13
     volumes:
       - db_data:/data/db
       - db_config:/data/configdb
