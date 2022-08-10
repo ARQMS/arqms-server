@@ -46,6 +46,9 @@ namespace MQTT_TestClient {
             await client.SubscribeAsync(factory.CreateSubscribeOptionsBuilder()
                                                .WithTopicFilter("test/topic")
                                                .Build());
+            await client.SubscribeAsync(factory.CreateSubscribeOptionsBuilder()
+                                               .WithTopicFilter("test/+/topic2")
+                                               .Build());
 
             client.ApplicationMessageReceivedAsync += async h => {
                 Console.WriteLine("received: " + Encoding.UTF8.GetString(h.ApplicationMessage.Payload));
