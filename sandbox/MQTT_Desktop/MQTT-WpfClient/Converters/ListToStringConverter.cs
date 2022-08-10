@@ -14,8 +14,9 @@ public class ListToStringConverter : IMultiValueConverter {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
         if (targetType != typeof(string)) throw new InvalidOperationException("The target must be a String");
 
+        var size = (int)values[1];
         if (values[0] is ObservableCollection<string> list) {
-            return string.Join("\n", list.ToArray());
+            return string.Join("\n", list.Take(size).ToArray());
         }
 
         return string.Empty;

@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTT-WpfClient", "MQTT-WpfClient\MQTT-WpfClient.csproj", "{AF685EC5-8F6E-422E-B732-DC503A9314AB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTT-TestClient", "MQTT-TestClient\MQTT-TestClient.csproj", "{592C79F5-3EFF-4B25-BE1D-C6B377D12BAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTT-WpfClient", "MQTT-WpfClient\MQTT-WpfClient.csproj", "{AF685EC5-8F6E-422E-B732-DC503A9314AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{AF685EC5-8F6E-422E-B732-DC503A9314AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF685EC5-8F6E-422E-B732-DC503A9314AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF685EC5-8F6E-422E-B732-DC503A9314AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{592C79F5-3EFF-4B25-BE1D-C6B377D12BAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{592C79F5-3EFF-4B25-BE1D-C6B377D12BAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{592C79F5-3EFF-4B25-BE1D-C6B377D12BAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{592C79F5-3EFF-4B25-BE1D-C6B377D12BAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
