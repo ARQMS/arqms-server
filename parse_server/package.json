@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "express": "4.17.2",
+    "mqtt": "^4.3.7",
     "parse": "3.4.1",
-    "parse-server": "^5.2.4"
+    "parse-server": "^5.2.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
