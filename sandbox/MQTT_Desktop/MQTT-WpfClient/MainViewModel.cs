@@ -45,11 +45,7 @@ public class MainViewModel {
             Log("Client connected");
 
             // room
-            await m_client.SubscribeAsync("devices/+/room/humidity");
-            await m_client.SubscribeAsync("devices/+/room/pressure");
-            await m_client.SubscribeAsync("devices/+/room/temperature");
-            await m_client.SubscribeAsync("devices/+/room/voc");
-            await m_client.SubscribeAsync("devices/+/room/co2");
+            await m_client.SubscribeAsync("devices/+/room/info");
 
             // device
             await m_client.SubscribeAsync("devices/+/status");

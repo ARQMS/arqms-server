@@ -6,17 +6,39 @@ Parse.Cloud.define("updateRoom", async (request) => {
     roomQuery.matchesQuery("Device", deviceQuery);
 
     var room = await roomQuery.first({ useMasterKey: true });
-    if (room == null) return;
-
-    switch (request.params.name) {
-        case "humidity":     room.set("relativeHumidity", Number(request.params.value)); break;
-        case "pressure":     room.set("pressure", Number(request.params.value)); break;
-        case "temperature":  room.set("temperature", Number(request.params.value)); break;
-        case "voc":          room.set("voc", Number(request.params.value)); break;
-        case "co2":          room.set("co2", Number(request.params.value)); break;
+    if (room == null) {
+        return;
     }
 
+    const info = request.params.value;
+    room.set("relativeHumidity", info.Humidity);
+    room.set("pressure", info.Pressure);
+    room.set("temperature", info.Temperature);
+    room.set("voc", info.VOC);
+    room.set("co2", info.CO2);
+       
     await room.save(null, {useMasterKey: true});
+
+    // create history item
+    const RoomHistory = Parse.Object.extend("RoomHistory");
+    var roomHistory = new RoomHistory();
+    roomHistory.set("room", room);
+    roomHistory.set("relativeHumidity", info.Humidity);
+    roomHistory.set("pressure", info.Pressure);
+    roomHistory.set("temperature", info.Temperature);
+    roomHistory.set("voc", info.VOC);
+    roomHistory.set("co2", info.CO2);
+
+    var userId = Object.keys(room.getACL().permissionsById)[0];
+    if (userId) {
+        const acl = new Parse.ACL();
+        acl.setReadAccess(userId, true);
+        acl.setWriteAccess(userId, true);
+        roomHistory.setACL(acl);
+    }
+
+
+    roomHistory.save(null, {useMasterKey: true});
 },{
     fields : ['serialnumber']
 });

@@ -10,7 +10,7 @@ exports.handleMsg = function (topic, message) {
         const param = {
             serialnumber: sn,
             name: data,
-            value: message.toString()
+            value: JSON.parse(message.toString())
         };
 
         Parse.Cloud.run("updateRoom", param);
