@@ -14,8 +14,10 @@ Parse.Cloud.define("updateRoom", async (request) => {
     room.set("relativeHumidity", info.Humidity);
     room.set("pressure", info.Pressure);
     room.set("temperature", info.Temperature);
-    room.set("voc", info.VOC);
-    room.set("co2", info.CO2);
+    // TODO create a jub and run bosch  BSEC
+    // https://www.bosch-sensortec.com/software-tools/software/bsec/
+    // room.set("voc", info.VOC);
+    // room.set("co2", info.CO2);
        
     await room.save(null, {useMasterKey: true});
 
@@ -26,8 +28,7 @@ Parse.Cloud.define("updateRoom", async (request) => {
     roomHistory.set("relativeHumidity", info.Humidity);
     roomHistory.set("pressure", info.Pressure);
     roomHistory.set("temperature", info.Temperature);
-    roomHistory.set("voc", info.VOC);
-    roomHistory.set("co2", info.CO2);
+    roomHistory.set("gasResistance", info.GasResistance);
 
     var userId = Object.keys(room.getACL().permissionsById)[0];
     if (userId) {
