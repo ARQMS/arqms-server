@@ -6,6 +6,8 @@ const ParseServer = require('parse-server').ParseServer;
 const path = require('path');
 const args = process.argv || [];
 const test = args.some(arg => arg.includes('jasmine'));
+const mqtt = require('mqtt');
+const stream = require('./stream/main')
 
 const config = {
   // Configure Parse Core configuration
@@ -35,16 +37,26 @@ const config = {
   }
 };
 
-const app = express();
+// MQTT service
+if (!test) {
+  const client = mqtt.connect("mqtt://mqtt-server");
+  client.on('connect', function () {
+    client.subscribe("devices/+/room/+");
+    client.subscribe("devices/+/status");
+  });
+
+  client.on("message", stream.handleMsg);
+}
 
 // Serve the Parse API on the /parse URL prefix
+const app = express();
 if (!test) {
   const api = new ParseServer(config);
   app.use('/parse', api);
 }
 
-const port = 1337;
 if (!test) {
+  const port = 1337;
   const httpServer = require('http').createServer(app);
   httpServer.listen(port, function () {
     console.log('parse-server running on port ' + port + '.');

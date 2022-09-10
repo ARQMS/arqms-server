@@ -25,8 +25,8 @@ public class MainViewModel {
     #pragma warning disable CS8618
     public MainViewModel() {
         #pragma warning restore CS8618
-        Topic = "devices/AR-0001/config";
-        Value = "";
+        Topic = "devices/AR-xxxx/config";
+        Value = "{ \"Interval\": 300 }";
 
         Send = new RelayCommand(OnSend);
         LogHistory = new ObservableCollection<string>();
@@ -45,14 +45,12 @@ public class MainViewModel {
             Log("Client connected");
 
             // room
-            await m_client.SubscribeAsync("devices/+/room/humidity");
-            await m_client.SubscribeAsync("devices/+/room/pressure");
-            await m_client.SubscribeAsync("devices/+/room/temperature");
-            await m_client.SubscribeAsync("devices/+/room/voc");
-            await m_client.SubscribeAsync("devices/+/room/co2");
+            await m_client.SubscribeAsync("devices/+/room/info");
 
             // device
             await m_client.SubscribeAsync("devices/+/status");
+            await m_client.SubscribeAsync("devices/+/config");
+            await m_client.SubscribeAsync("devices/update/+");
 
             await Task.Delay(2000);
 
@@ -61,7 +59,7 @@ public class MainViewModel {
     }
 
     private Task OnPayloadReceived(MqttApplicationMessageReceivedEventArgs arg) {
-        var data  = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload);
+        var data  = arg.ApplicationMessage.ConvertPayloadToString();
         var topic = arg.ApplicationMessage.Topic;
 
         Log($"received: {topic} - {data}");
@@ -79,7 +77,7 @@ public class MainViewModel {
             return;
         }
 
-        await m_client.PublishStringAsync(Topic, Value, MqttQualityOfServiceLevel.AtLeastOnce, true);
+        await m_client.PublishStringAsync(Topic, Value, MqttQualityOfServiceLevel.ExactlyOnce, true);
 
         Log($"sent: {Topic} - {Value}");
     }

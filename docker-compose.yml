@@ -5,6 +5,8 @@ services:
     ports:
       - 1883:1883
       - 9001:9001
+    container_name: mqtt
+    hostname: mqtt-server
     volumes:
       - ./mosquitto/conf:/mosquitto/config
       - ./mosquitto/log:/mosquitto/log
