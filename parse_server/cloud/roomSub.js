@@ -10,14 +10,13 @@ Parse.Cloud.define("updateRoom", async (request) => {
         return;
     }
 
-    const info = request.params.value;
-    room.set("relativeHumidity", info.Humidity);
-    room.set("pressure", info.Pressure);
-    room.set("temperature", info.Temperature);
+    room.set("relativeHumidity", request.params.humidity);
+    room.set("pressure", request.params.pressure);
+    room.set("temperature", request.params.temperature);
     // TODO create a jub and run bosch  BSEC
     // https://www.bosch-sensortec.com/software-tools/software/bsec/
-    // room.set("voc", info.VOC);
-    // room.set("co2", info.CO2);
+    // room.set("voc", request.params.VOC);
+    // room.set("co2", request.params.CO2);
        
     await room.save(null, {useMasterKey: true});
 
@@ -25,10 +24,10 @@ Parse.Cloud.define("updateRoom", async (request) => {
     const RoomHistory = Parse.Object.extend("RoomHistory");
     var roomHistory = new RoomHistory();
     roomHistory.set("room", room);
-    roomHistory.set("relativeHumidity", info.Humidity);
-    roomHistory.set("pressure", info.Pressure);
-    roomHistory.set("temperature", info.Temperature);
-    roomHistory.set("gasResistance", info.GasResistance);
+    roomHistory.set("relativeHumidity", request.params.humidity);
+    roomHistory.set("pressure", request.params.pressure);
+    roomHistory.set("temperature", request.params.temperature);
+    roomHistory.set("gasResistance", request.params.gasResistance);
 
     var userId = Object.keys(room.getACL().permissionsById)[0];
     if (userId) {
@@ -37,7 +36,6 @@ Parse.Cloud.define("updateRoom", async (request) => {
         acl.setWriteAccess(userId, true);
         roomHistory.setACL(acl);
     }
-
 
     roomHistory.save(null, {useMasterKey: true});
 },{

@@ -43,8 +43,6 @@ if (!test) {
   client.on('connect', function () {
     client.subscribe("devices/+/room/+");
     client.subscribe("devices/+/status");
-
-    client.publish('devices/server/status', 'Server connected')
   });
 
   client.on("message", stream.handleMsg);

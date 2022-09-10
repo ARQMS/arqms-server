@@ -2,3 +2,4 @@
 
 require('./registerDevice.js');
 require('./roomSub.js');
+require('./deviceSub.js');
