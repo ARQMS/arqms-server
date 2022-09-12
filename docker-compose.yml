@@ -15,7 +15,8 @@ services:
       - parse-server
     depends_on:
       - parse-server
-
+    networks:
+      - arqms-net
       
   storage:
     image: mongo:4.4.13
@@ -29,7 +30,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: "${INITDB_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${INITDB_ROOT_PASSWORD}"
-
+    networks:
+      - arqms-net
 
   parse-server:
     build: ./parse_server/.
@@ -55,12 +57,14 @@ services:
     volumes:
       - ./parse_server:/usr/src/app
       - nodemodules:/usr/src/app/node_modules
+    networks:
+      - arqms-net
+
 
 networks:
-  default:
-    external:
-      name: host
-            
+  arqms-net:
+    driver: host
+    
 volumes:
   db_data:
   db_config:
