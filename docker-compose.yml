@@ -15,6 +15,8 @@ services:
       - parse-server
     depends_on:
       - parse-server
+    networks:
+      - humi-net
       
   storage:
     image: mongo:4.4.13
@@ -28,7 +30,9 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: "${INITDB_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${INITDB_ROOT_PASSWORD}"
-  
+    networks:
+      - humi-net
+      
   parse-server:
     build: ./parse_server/.
     command: npm run debug
@@ -53,10 +57,12 @@ services:
     volumes:
       - ./parse_server:/usr/src/app
       - nodemodules:/usr/src/app/node_modules
+    networks:
+      - humi-net
 
 # Synology fix: https://stackoverflow.com/a/58690946/7110375
 networks:
-  default:
+  humi-net:
     name: humi-net
     external: true
     
