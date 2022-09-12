@@ -52,8 +52,10 @@ services:
       - storage
     volumes:
       - ./parse_server:/usr/src/app
+      - nodemodules:/usr/src/app/node_modules
 
     
 volumes:
   db_data:
   db_config:
+  nodemodules:

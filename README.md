@@ -58,7 +58,16 @@ db.createUser(
 )
 ```
 
+**Note:** The following step in only required for building docker image:
+```
+docker buildx use arqms-builder
+docker buildx use arqms-builder
+```
 
+# Create docker ARQMS image
+```
+docker buildx build --platform=linux/amd64,linux/arm64,linux/arm/v7 --push -t sanore/arqms:latest .
+```
 
 # Installation
 The following steps are only required for productive system. See [First Step](#first-step) otherwise
