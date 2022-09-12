@@ -50,11 +50,10 @@ services:
       - storage
     depends_on:
       - storage
-#     volumes:
-#       - ./parse_server:/usr/src/app
+    volumes:
+      - ./parse_server:/usr/src/app
 
     
 volumes:
   db_data:
   db_config:
-#  nodemodules:
