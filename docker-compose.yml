@@ -58,7 +58,6 @@ services:
 networks:
   default:
     name: host
-    external: true
     
 volumes:
   db_data:
