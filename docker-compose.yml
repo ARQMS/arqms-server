@@ -15,8 +15,7 @@ services:
       - parse-server
     depends_on:
       - parse-server
-    networks:
-      - arqms-net
+      
       
   storage:
     image: mongo:4.4.13
@@ -30,12 +29,9 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: "${INITDB_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${INITDB_ROOT_PASSWORD}"
-    networks:
-      - arqms-net
 
   parse-server:
-    build: ./parse_server/.
-    command: npm run debug
+    image: sanore/arqms:latest
     environment:
         PARSE_DATABSE_URI: "${DATABASE_URI}"
         PARSE_APP_ID: "${APP_ID}"
@@ -54,18 +50,11 @@ services:
       - storage
     depends_on:
       - storage
-    volumes:
-      - ./parse_server:/usr/src/app
-      - nodemodules:/usr/src/app/node_modules
-    networks:
-      - arqms-net
+#     volumes:
+#       - ./parse_server:/usr/src/app
 
-
-networks:
-  arqms-net:
-    driver: host
     
 volumes:
   db_data:
   db_config:
-  nodemodules:
+#  nodemodules:
