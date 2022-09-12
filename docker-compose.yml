@@ -63,7 +63,7 @@ services:
 # Synology fix: https://stackoverflow.com/a/58690946/7110375
 networks:
   humi-net:
-    name: humi-net
+    name: host
     external: true
     
 volumes:
