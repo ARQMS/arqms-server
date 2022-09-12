@@ -30,32 +30,37 @@ services:
       MONGO_INITDB_ROOT_USERNAME: "${INITDB_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${INITDB_ROOT_PASSWORD}"
 
-      
-#  parse-server:
-#    build: ./parse_server/.
-#    command: npm run debug
-#    environment:
-#        PARSE_DATABSE_URI: "${DATABASE_URI}"
-#        PARSE_APP_ID: "${APP_ID}"
-#        PARSE_MASTER_KEY: "${MASTER_KEY}"
-#        PARSE_SERVER_URI: "${SERVER_URI}"
-#        PARSE_APP_URI: "${APP_URI}"
-#        PARSE_SMTP_PORT: "${SMTP_PORT}"
-#        PARSE_SMTP_HOST: "${SMTP_HOST}"
-#        PARSE_SMTP_EMAIL: "${SMTP_EMAIL}"
-#        PARSE_SMTP_PWD: "${SMTP_PWD}"
-#    container_name: parse-server
-#    hostname: parse-server
-#    ports:
-#      - 1337:1337
-#    links:
-#      - storage
-#    depends_on:
-#      - storage
-#    volumes:
-#      - ./parse_server:/usr/src/app
-#      - nodemodules:/usr/src/app/node_modules
 
+  parse-server:
+    build: ./parse_server/.
+    command: npm run debug
+    environment:
+        PARSE_DATABSE_URI: "${DATABASE_URI}"
+        PARSE_APP_ID: "${APP_ID}"
+        PARSE_MASTER_KEY: "${MASTER_KEY}"
+        PARSE_SERVER_URI: "${SERVER_URI}"
+        PARSE_APP_URI: "${APP_URI}"
+        PARSE_SMTP_PORT: "${SMTP_PORT}"
+        PARSE_SMTP_HOST: "${SMTP_HOST}"
+        PARSE_SMTP_EMAIL: "${SMTP_EMAIL}"
+        PARSE_SMTP_PWD: "${SMTP_PWD}"
+    container_name: parse-server
+    hostname: parse-server
+    ports:
+      - 1337:1337
+    links:
+      - storage
+    depends_on:
+      - storage
+    volumes:
+      - ./parse_server:/usr/src/app
+      - nodemodules:/usr/src/app/node_modules
+
+networks:
+  default:
+    external:
+      name: host
+            
 volumes:
   db_data:
   db_config:
